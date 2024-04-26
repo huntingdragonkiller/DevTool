@@ -1,9 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor;
-using UnityEditor.Playables;
 using UnityEngine;
-using static UnityEngine.GraphicsBuffer;
 
 public class HexGrid : MonoBehaviour
 {
@@ -13,7 +10,6 @@ public class HexGrid : MonoBehaviour
     public bool isFlatTopped;
 
     public HexTileGenerationSettings settings;
-
 
     public void Clear()
     {
@@ -30,7 +26,6 @@ public class HexGrid : MonoBehaviour
             DestroyImmediate(child, true);
         }
     }
-
     
     public void LayoutGrid()
     {
@@ -39,6 +34,7 @@ public class HexGrid : MonoBehaviour
         {
             for (int x = 0; x < gridSize.x; x++)
             {
+                Quaternion rotation = Quaternion.Euler(0f, 90f, 0f);
                 GameObject tile = new GameObject($"Hex {x}, {y}");
                 tile.transform.position = Utilities.GetPositionForHexFromCoordinate(x, y, radius, isFlatTopped);
                 
@@ -46,7 +42,11 @@ public class HexGrid : MonoBehaviour
                 hextile.settings = settings;
                 hextile.RollTileType();
                 hextile.AddTile();
-                
+
+                if (isFlatTopped)
+                {
+                    tile.transform.rotation = rotation;
+                }
 
                 // Assign its offset coordinates for human parsing ( Column, Row)
                 hextile.offsetCoordinate = new Vector2Int(x, y);

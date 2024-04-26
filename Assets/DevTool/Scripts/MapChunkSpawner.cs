@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 
 public class MapChunkSpawner : MonoBehaviour
@@ -23,11 +24,6 @@ public class MapChunkSpawner : MonoBehaviour
         {
             DestroyImmediate(child, true);
         }
-    }
-    
-    private void OnEnable()
-    {
-        LayoutGrid();
     }
 
     public void LayoutGrid()
@@ -63,4 +59,23 @@ public class MapChunkSpawner : MonoBehaviour
 public class Chunk
 {
     public GameObject chunkPrefab;
+}
+
+[CustomEditor(typeof(MapChunkSpawner))]
+class MapChunkEditor : Editor
+{
+    public override void OnInspectorGUI()
+    {
+        MapChunkSpawner mapChunkSpawner = (MapChunkSpawner)target;
+        base.OnInspectorGUI();
+        EditorGUILayout.LabelField("Layout", EditorStyles.boldLabel);
+        if (GUILayout.Button("Clear"))
+        {
+            mapChunkSpawner.Clear();
+        }
+        if (GUILayout.Button("Generate"))
+        {
+            mapChunkSpawner.LayoutGrid();
+        }
+    }
 }

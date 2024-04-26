@@ -59,4 +59,16 @@ public class HexTile : MonoBehaviour
         }
         transform.SetParent(tile.transform);
     }
+    
+    public void OnDrawGizmosSelected()
+    {
+        foreach (HexTile neighbor in neighbors)
+        {
+            Gizmos.color = Color.blue;
+            Gizmos.DrawSphere(transform.position, 0.1f);
+            Gizmos.color = Color.white;
+            Gizmos.DrawLine(transform.position, neighbor.transform.position);
+        }
+    }
+    
 }

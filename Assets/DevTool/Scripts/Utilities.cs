@@ -6,9 +6,9 @@ public class Utilities : MonoBehaviour
 {
     public static Vector3Int OffsetToCube(Vector2Int offset)
     {
-        var q = offset.x - (offset.y + (offset.y & 2)) / 2;
+        var q = offset.x - (offset.y + (offset.y % 2)) / 2;
         var r = offset.y;
-        return new Vector3Int(q, r, -q - r);
+        return new Vector3Int(q, r, -q-r);
     }
 
     public static Vector3 GetPositionForHexFromCoordinate(int column, int row, float radius = 1f, bool isFlatTopped = false)
@@ -20,7 +20,7 @@ public class Utilities : MonoBehaviour
         if (!isFlatTopped)
         {
             shouldOffset = (row % 2) == 0;
-            width = Mathf.Sqrt(3) * size;
+            width = Mathf.Sqrt(3f) * size;
             height = 2f * size;
 
             horDis = width;
@@ -44,6 +44,6 @@ public class Utilities : MonoBehaviour
             xPosition = (column * (horDis));
             yPosition = (row * verDis) - offset;
         }
-        return new Vector3(xPosition, 0, yPosition);
+        return new Vector3(xPosition, 0, -yPosition);
     }
 }

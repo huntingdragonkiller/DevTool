@@ -7,7 +7,6 @@ public class TileManager : MonoBehaviour
 {
     public static TileManager instance;
     public Dictionary<Vector3Int, HexTile> tiles;
-    public List<HexTile> neighbors;
 
     private void Awake()
     {
@@ -28,7 +27,7 @@ public class TileManager : MonoBehaviour
         }
         
     }
-    
+
     public void RegisterTile(HexTile tile)
     {
         tiles.Add(tile.cubeCoordinate, tile);
@@ -59,18 +58,4 @@ public class TileManager : MonoBehaviour
         }
         return neighbors;
     }
-
-    /*
-    public void OnDrawGizmosSelected()
-    {
-        foreach (HexTile neighbor in neighbors)
-        {
-            Gizmos.color = Color.blue;
-            Gizmos.DrawSphere(transform.position, 0.1f);
-            Gizmos.color = Color.white;
-            Gizmos.DrawLine(transform.position, neighbor.transform.position);
-        }
-    }
-    */
-    
 }
