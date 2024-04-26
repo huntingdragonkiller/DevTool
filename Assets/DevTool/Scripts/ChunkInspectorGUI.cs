@@ -4,7 +4,7 @@ using UnityEditor;
 using UnityEngine;
 
 [CustomEditor(typeof(HexGrid))]
-public class InspectorGUI : Editor
+public class ChunkInspectorGUI : Editor
 {
     public override void OnInspectorGUI()
     {
@@ -13,9 +13,10 @@ public class InspectorGUI : Editor
         base.OnInspectorGUI();
         // add after
 
+        EditorGUILayout.LabelField("Layout", EditorStyles.boldLabel);
         if (GUILayout.Button("Clear"))
             hgrid.Clear();
-        if (GUILayout.Button("Layout"))
+        if (GUILayout.Button("Generate"))
         {
             hgrid.LayoutGrid();
         }

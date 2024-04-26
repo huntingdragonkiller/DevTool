@@ -1,16 +1,18 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Net;
 using UnityEngine;
 
 public class TileManager : MonoBehaviour
 {
     public static TileManager instance;
-    //public static HexTile tiles;
-    /*
+    public Dictionary<Vector3Int, HexTile> tiles;
+    public List<HexTile> neighbors;
+
     private void Awake()
     {
         instance = this;
-        //tiles = new Dictionary<Vector3Int, HexTile>();
+        tiles = new Dictionary<Vector3Int, HexTile>();
 
         HexTile[] hexTiles = gameObject.GetComponentsInChildren<HexTile>();
         // Register all the tiles
@@ -21,13 +23,15 @@ public class TileManager : MonoBehaviour
         // Get each tiles set of neighbors
         foreach(HexTile hexTile in hexTiles)
         {
-            List<HexTile> neighbor = GetNeighbours(hexTile);
+            List<HexTile> neighbors = GetNeighbours(hexTile);
+            hexTile.neighbors = neighbors;
         }
+        
     }
     
     public void RegisterTile(HexTile tile)
     {
-        //tiles.Add(tile.cubeCoordinate, tile);
+        tiles.Add(tile.cubeCoordinate, tile);
     }
 
     private List<HexTile> GetNeighbours(HexTile tile)
@@ -53,10 +57,10 @@ public class TileManager : MonoBehaviour
                 neighbors.Add(neighbor);
             }
         }
-
         return neighbors;
     }
 
+    /*
     public void OnDrawGizmosSelected()
     {
         foreach (HexTile neighbor in neighbors)
@@ -68,4 +72,5 @@ public class TileManager : MonoBehaviour
         }
     }
     */
+    
 }

@@ -7,7 +7,7 @@ public class MapChunkSpawner : MonoBehaviour
     public Vector2Int mapSize;
     public int chunkSize;
 
-    public List<Chunk> chunks = new List<Chunk>();
+    public List<GameObject> chunks = new List<GameObject>();
 
     public void Clear()
     {
@@ -24,13 +24,12 @@ public class MapChunkSpawner : MonoBehaviour
             DestroyImmediate(child, true);
         }
     }
-    /*
+    
     private void OnEnable()
     {
         LayoutGrid();
     }
 
-    //[EditorButton("Roll")]
     public void LayoutGrid()
     {
         Clear();
@@ -38,10 +37,11 @@ public class MapChunkSpawner : MonoBehaviour
         {
             for (int x = 0; x < mapSize.x; x++)
             {
-                GameObject chunk = GameObject.Instantiate(chunks.GetRandom());
+                int randomChunk = Random.Range(0, chunks.Count);
+                GameObject chunk = GameObject.Instantiate(chunks[randomChunk]);
                 chunk.name = $"Chunk (C{x},R{y})";
                 chunk.transform.position = Utilities.GetPositionForHexFromCoordinate(chunkSize * x, chunkSize * y);
-                //chunk.SetParent(transform, true);
+                chunk.transform.SetParent(transform, true);
 
                 Vector2Int chunkCornerCoordinate = new Vector2Int(chunkSize * x, chunkSize * y);
                 // Offset all the children by the cube coordinate
@@ -56,16 +56,11 @@ public class MapChunkSpawner : MonoBehaviour
             }
         }
     }
-    */
+        
 }
 
 [System.Serializable]
 public class Chunk
 {
     public GameObject chunkPrefab;
-
-    public void GetRandom()
-    {
-
-    }
 }
