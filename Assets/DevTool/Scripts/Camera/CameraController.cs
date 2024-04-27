@@ -7,7 +7,7 @@ public class CameraController : MonoBehaviour
     public static CameraController instance;
     
     public Transform cameraTransform;
-    public Transform followTransform;
+    //public Transform followTransform;
     
     public float normalSpeed;
     public float fastSpeed;
@@ -19,10 +19,6 @@ public class CameraController : MonoBehaviour
     public Vector3 newPosition;
     public Quaternion newRotation;
     public Vector3 newZoom;
-
-
-    public Vector3 dragStartPosition;
-    public Vector3 dragCurrentPosition;
 
     // Start is called before the first frame update
     void Start()
@@ -37,58 +33,12 @@ public class CameraController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if ( followTransform != null)
-        {
-            transform.position = followTransform.position;
-        }
-        else
-        {
-            HandleMovementInput();
-            //HandleMouseInput();
-        }
-
-        if(Input.GetKeyDown(KeyCode.Escape))
-        {
-            followTransform = null;
-        }
-    }
-
-    void HandleMouseInput()
-    {
-        if(Input.GetMouseButtonDown(0))
-        {
-            Debug.Log("Mouse Input received");
-            Plane plane = new Plane(Vector3.up, Vector3.zero);
-
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-
-            float entry;
-
-            if(plane.Raycast(ray, out entry))
-            {
-                dragStartPosition = ray.GetPoint(entry);
-            }
-        }
-
-        if (Input.GetMouseButton(0))
-        {
-            Plane plane = new Plane(Vector3.up, Vector3.zero);
-
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-
-            float entry;
-
-            if (plane.Raycast(ray, out entry))
-            {
-                dragStartPosition = ray.GetPoint(entry);
-
-                newPosition = transform.position + dragStartPosition - dragCurrentPosition;
-            }
-        }
+        HandleMovementInput();
     }
 
     void HandleMovementInput()
     {
+        // Camera Speed
         if(Input.GetKey(KeyCode.LeftShift))
         {
             movementSpeed = fastSpeed;
@@ -98,6 +48,7 @@ public class CameraController : MonoBehaviour
             movementSpeed = normalSpeed;
         }
         
+        // Camera Movement
         if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow))
         {
             newPosition += (transform.forward * movementSpeed);
@@ -115,6 +66,7 @@ public class CameraController : MonoBehaviour
             newPosition += (transform.right * -movementSpeed);
         }
 
+        // Camera Rotation
         if(Input.GetKey(KeyCode.Q))
         {
             newRotation *= Quaternion.Euler(Vector3.up * rotationAmount);
@@ -124,6 +76,7 @@ public class CameraController : MonoBehaviour
             newRotation *= Quaternion.Euler(Vector3.up * -rotationAmount);
         }
 
+        // Zoom function
         if(Input.GetKey(KeyCode.R))
         {
             newZoom += zoomAmount;
@@ -134,6 +87,7 @@ public class CameraController : MonoBehaviour
             newZoom -= zoomAmount;
         }
 
+        // Smooth out camera movement
         transform.position = Vector3.Lerp(transform.position, newPosition, Time.deltaTime * movementTime);
         transform.rotation = Quaternion.Lerp(transform.rotation, newRotation, Time.deltaTime * movementTime);
         cameraTransform.localPosition = Vector3.Lerp(cameraTransform.localPosition, newZoom, Time.deltaTime * movementTime);

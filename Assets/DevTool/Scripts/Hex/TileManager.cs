@@ -8,6 +8,13 @@ public class TileManager : MonoBehaviour
     public static TileManager instance;
     public Dictionary<Vector3Int, HexTile> tiles;
 
+    public GameObject highlight;
+    public GameObject selector;
+    public Vector3Int playerPos;
+
+    public MovementController player;
+    public List<HexTile> path;
+
     private void Awake()
     {
         instance = this;
@@ -25,6 +32,18 @@ public class TileManager : MonoBehaviour
             List<HexTile> neighbors = GetNeighbours(hexTile);
             hexTile.neighbors = neighbors;
         }
+
+
+        // Put the player somewhere
+        int randomTile = Random.Range(0, hexTiles.Length);
+        HexTile tile = hexTiles[randomTile];
+        while(tile.tileType != HexTileGenerationSettings.TileType.Standard)
+        {
+            tile = hexTiles[randomTile];
+        }
+        playerPos = tile.cubeCoordinate;
+        player.transform.position = tile.transform.position + new Vector3(0, 1f, 0);
+        player.currentTile = tile;
         
     }
 
@@ -58,4 +77,27 @@ public class TileManager : MonoBehaviour
         }
         return neighbors;
     }
+
+    public void OnHighlightTile(HexHighlight tile)
+    {
+        highlight.transform.position = tile.transform.position;
+    }
+
+    public void OnSelectTile(HexHighlight tile)
+    {
+        selector.transform.position = tile.transform.position;
+    }
+
+    
+    public void OnDrawGizmos()
+    {
+        if(path != null)
+        {
+            foreach(HexTile tile in path)
+            {
+                Gizmos.DrawCube(tile.transform.position + new Vector3(0f, 0.5f, 0.5f), new Vector3(0.5f, 0.5f, 0.5f));
+            }
+        }        
+    }
+    
 }

@@ -51,12 +51,13 @@ public class HexTile : MonoBehaviour
     public void AddTile()
     {
         tile = GameObject.Instantiate(settings.GetTile(tileType), transform);
-        
+        /*
         if (gameObject.GetComponent<MeshCollider>() == null)
         {
             MeshCollider collider = gameObject.AddComponent<MeshCollider>();
             collider.sharedMesh = GetComponentInChildren<MeshFilter>().mesh;
         }
+        */
         transform.SetParent(tile.transform);
     }
     
@@ -70,5 +71,4 @@ public class HexTile : MonoBehaviour
             Gizmos.DrawLine(transform.position, neighbor.transform.position);
         }
     }
-    
 }

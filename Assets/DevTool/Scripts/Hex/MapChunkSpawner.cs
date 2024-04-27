@@ -36,7 +36,7 @@ public class MapChunkSpawner : MonoBehaviour
                 int randomChunk = Random.Range(0, chunks.Count);
                 GameObject chunk = GameObject.Instantiate(chunks[randomChunk]);
                 chunk.name = $"Chunk (C{x},R{y})";
-                chunk.transform.position = Utilities.GetPositionForHexFromCoordinate(chunkSize * x, chunkSize * y);
+                chunk.transform.position = Utilities.GetPositionForHexFromCoordinate(chunkSize * x, chunkSize * y, 1.5f);
                 chunk.transform.SetParent(transform, true);
 
                 Vector2Int chunkCornerCoordinate = new Vector2Int(chunkSize * x, chunkSize * y);
