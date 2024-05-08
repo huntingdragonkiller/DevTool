@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
-public class MapChunkSpawner : MonoBehaviour
+public class CubeMapLoader : MonoBehaviour
 {
     public Vector2Int mapSize;
-    public int chunkSize;
+    private int chunkSize;
 
     public List<GameObject> chunks = new List<GameObject>();
 
@@ -37,31 +37,32 @@ public class MapChunkSpawner : MonoBehaviour
             {
                 int randomChunk = Random.Range(0, chunks.Count);
                 GameObject chunk = Instantiate(chunks[randomChunk]);
+                chunkSize = chunk.GetComponent<CubeGrid>().radius * chunk.GetComponent<CubeGrid>().gridSize.x;
                 chunk.name = $"Chunk (C{x},R{y})";
-                chunk.transform.position = HexUtilities.GetPositionForHexFromCoordinate(chunkSize * x, chunkSize * y, 1.5f);
+                Vector3Int chunkPosition = new Vector3Int(x * chunkSize, 0, y * chunkSize);
+                chunk.transform.position = chunkPosition;
                 chunk.transform.SetParent(transform, true);
 
-                Vector2Int chunkCornerCoordinate = new Vector2Int(chunkSize * x, chunkSize * y);
+                Vector2Int chunkCornerCoordinate = new Vector2Int(chunkSize/chunk.GetComponent<CubeGrid>().radius * x, chunkSize * y / chunk.GetComponent<CubeGrid>().radius * y);
                 // Offset all the children by the cube coordinate
                 foreach (Transform child in chunk.transform)
                 {
-                    HexTile tile = child.gameObject.GetComponent<HexTile>();
-                    tile.offsetCoordinate += new Vector2Int(chunkCornerCoordinate.x, chunkCornerCoordinate.y);
-                    tile.cubeCoordinate = HexUtilities.OffsetToCube(tile.offsetCoordinate);
+                    CubeTile tile = child.gameObject.GetComponent<CubeTile>();
+                    tile.gridCoordinates += new Vector2Int(chunkCornerCoordinate.x, chunkCornerCoordinate.y);
 
-                    tile.gameObject.name = $"Hex (C{tile.offsetCoordinate.x}, R{tile.offsetCoordinate.y})";
+                    tile.gameObject.name = $"Cube (C{tile.gridCoordinates.x}, R{tile.gridCoordinates.y})";
                 }
             }
         }
     }
 }
 
-[CustomEditor(typeof(MapChunkSpawner))]
-class MapChunkEditor : Editor
+[CustomEditor(typeof(CubeMapLoader))]
+class CubeMapEditor : Editor
 {
     public override void OnInspectorGUI()
     {
-        MapChunkSpawner mapChunkSpawner = (MapChunkSpawner)target;
+        CubeMapLoader mapChunkSpawner = (CubeMapLoader)target;
         base.OnInspectorGUI();
         EditorGUILayout.LabelField("Layout", EditorStyles.boldLabel);
         if (GUILayout.Button("Clear"))

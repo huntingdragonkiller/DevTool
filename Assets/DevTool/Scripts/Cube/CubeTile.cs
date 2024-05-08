@@ -3,18 +3,16 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [ExecuteInEditMode]
-public class HexTile : MonoBehaviour
+public class CubeTile : MonoBehaviour
 {
-    public HexTileGenerationSettings settings;
-    public HexTileGenerationSettings.TileType tileType;
+    public TileGenerationSettings settings;
+    public TileGenerationSettings.TileType tileType;
 
     public GameObject tile;
 
-    public Vector2Int offsetCoordinate;
+    public Vector2Int gridCoordinates;
 
-    public Vector3Int cubeCoordinate;
-
-    public List<HexTile> neighbors;
+    public List<CubeTile> neighbors;
 
     private bool isDirty = false;
 
@@ -27,9 +25,9 @@ public class HexTile : MonoBehaviour
 
     private void Update()
     {
-        if(isDirty)
+        if (isDirty)
         {
-            if(Application.isPlaying)
+            if (Application.isPlaying)
             {
                 GameObject.Destroy(tile);
             }
@@ -45,19 +43,20 @@ public class HexTile : MonoBehaviour
 
     public void RollTileType()
     {
-        tileType = (HexTileGenerationSettings.TileType)Random.Range(0, 3);
+        tileType = (TileGenerationSettings.TileType)Random.Range(0, 3);
     }
 
     public void AddTile()
     {
-        tile = GameObject.Instantiate(settings.GetTile(tileType), transform);
+        tile = Instantiate(settings.GetTile(tileType), transform);
         transform.SetParent(tile.transform);
     }
+
     
     // Draw lines to each tile neighbors
     public void OnDrawGizmosSelected()
     {
-        foreach (HexTile neighbor in neighbors)
+        foreach (CubeTile neighbor in neighbors)
         {
             Gizmos.color = Color.blue;
             Gizmos.DrawSphere(transform.position, 0.1f);
@@ -65,4 +64,5 @@ public class HexTile : MonoBehaviour
             Gizmos.DrawLine(transform.position, neighbor.transform.position);
         }
     }
+    
 }

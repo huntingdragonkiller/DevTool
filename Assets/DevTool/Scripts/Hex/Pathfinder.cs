@@ -5,8 +5,10 @@ using UnityEngine;
 
 public class Pathfinder : MonoBehaviour
 {
+    // Creates a list of tiles for a path to the destination from the origin
     public static List<HexTile> FindPath(HexTile origin, HexTile destination)
     {
+        // Dictionaries splitting between nodes evaluated and not evaluated
         Dictionary<HexTile, Node> nodesNotEvaluated = new Dictionary<HexTile, Node>();
         Dictionary<HexTile, Node> nodesAlreadyEvaluated = new Dictionary<HexTile, Node>();
 
@@ -52,7 +54,7 @@ public class Pathfinder : MonoBehaviour
             return true;
         }
 
-        // Otherwise, add out neightbors to the list and try to traverse them
+        // Otherwise, add our neightbors to the list and try to traverse them
         List<Node> neighbors = new List<Node>();
         foreach(HexTile tile in currentNode.target.neighbors)
         {

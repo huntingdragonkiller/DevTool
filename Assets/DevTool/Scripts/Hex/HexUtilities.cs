@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Utilities : MonoBehaviour
+public class HexUtilities : MonoBehaviour
 {
     public static Vector3Int OffsetToCube(Vector2Int offset)
     {

@@ -6,11 +6,11 @@ public class HexHighlight : MonoBehaviour
 {
     public void OnHighlightTile()
     {
-        TileManager.instance.OnHighlightTile(this);
+        HexTileManager.instance.OnHighlightTile(this);
     }
 
     public void OnSelectTile()
     {
-        TileManager.instance.OnSelectTile(this);
+        HexTileManager.instance.OnSelectTile(this);
     }
 }

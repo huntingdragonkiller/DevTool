@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MovementController : MonoBehaviour
+public class HexMovementController : MonoBehaviour
 {
     public List<HexTile> currentPath;
     public HexTile nextTile;
@@ -56,7 +56,7 @@ public class MovementController : MonoBehaviour
             targetPosition = nextTile.transform.position + new Vector3(0, 1f, 0);
             gotPath = true;
             currentPath.RemoveAt(0);
-            TileManager.instance.playerPos = nextTile.cubeCoordinate;
+            HexTileManager.instance.playerPos = nextTile.cubeCoordinate;
             UpdateLineRenderer(currentPath);
         }
     }

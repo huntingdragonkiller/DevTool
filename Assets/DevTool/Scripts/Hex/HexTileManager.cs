@@ -3,16 +3,16 @@ using System.Collections.Generic;
 using System.Net;
 using UnityEngine;
 
-public class TileManager : MonoBehaviour
+public class HexTileManager : MonoBehaviour
 {
-    public static TileManager instance;
+    public static HexTileManager instance;
     public Dictionary<Vector3Int, HexTile> tiles;
 
     public GameObject highlight;
     public GameObject selector;
     public Vector3Int playerPos;
 
-    public MovementController player;
+    public HexMovementController player;
     public List<HexTile> path;
 
     private void Awake()
@@ -52,6 +52,7 @@ public class TileManager : MonoBehaviour
         tiles.Add(tile.cubeCoordinate, tile);
     }
 
+    // Get the neighbors of each tile
     private List<HexTile> GetNeighbours(HexTile tile)
     {
         List<HexTile> neighbors = new List<HexTile>();
@@ -88,7 +89,7 @@ public class TileManager : MonoBehaviour
         selector.transform.position = tile.transform.position;
     }
 
-    
+    // Draw the path from the player to the selected tile
     public void OnDrawGizmos()
     {
         if(path != null)

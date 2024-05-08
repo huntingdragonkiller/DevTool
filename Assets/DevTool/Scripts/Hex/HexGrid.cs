@@ -11,6 +11,7 @@ public class HexGrid : MonoBehaviour
 
     public HexTileGenerationSettings settings;
 
+    // clears existing generation
     public void Clear()
     {
         List<GameObject> children = new List<GameObject>();
@@ -27,6 +28,7 @@ public class HexGrid : MonoBehaviour
         }
     }
     
+    // Clears pre existing grid generation and puts in a new one
     public void LayoutGrid()
     {
         Clear();
@@ -36,13 +38,14 @@ public class HexGrid : MonoBehaviour
             {
                 Quaternion rotation = Quaternion.Euler(0f, 90f, 0f);
                 GameObject tile = new GameObject($"Hex {x}, {y}");
-                tile.transform.position = Utilities.GetPositionForHexFromCoordinate(x, y, radius, isFlatTopped);
+                tile.transform.position = HexUtilities.GetPositionForHexFromCoordinate(x, y, radius, isFlatTopped);
                 
                 HexTile hextile = tile.AddComponent<HexTile>();
                 hextile.settings = settings;
                 hextile.RollTileType();
                 hextile.AddTile();
 
+                // if flat top is selected rotate the hex to match new offset
                 if (isFlatTopped)
                 {
                     tile.transform.rotation = rotation;
@@ -52,7 +55,7 @@ public class HexGrid : MonoBehaviour
                 hextile.offsetCoordinate = new Vector2Int(x, y);
 
                 // Assign/convert these to cube coordinates for navigation
-                hextile.cubeCoordinate = Utilities.OffsetToCube(hextile.offsetCoordinate);
+                hextile.cubeCoordinate = HexUtilities.OffsetToCube(hextile.offsetCoordinate);
 
                 tile.transform.SetParent(transform);
             }

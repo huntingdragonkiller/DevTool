@@ -1,0 +1,17 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 907185495adfa5b40818677100debef3, type: 3}
+  m_Name: TileGeneration Settings
+  m_EditorClassIdentifier: 
+  Standard: {fileID: 6026538573780326640, guid: ce34e41ee408faa4bba353fa2a91df28, type: 3}
+  Water: {fileID: 6026538573780326640, guid: 46f2d667eeb8d1942a590481a83348f7, type: 3}
+  Cliff: {fileID: 6026538573780326640, guid: 23355dec34fda004585910b213bbc39c, type: 3}

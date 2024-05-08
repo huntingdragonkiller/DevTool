@@ -2,8 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "TileGen/HexGenerationSettings")]
-public class HexTileGenerationSettings : ScriptableObject
+[CreateAssetMenu(menuName = "TileGen/GenerationSettings")]
+public class TileGenerationSettings : ScriptableObject
 {
     public enum TileType
     {
