@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [ExecuteInEditMode]
+[SelectionBase]
 public class CubeTile : MonoBehaviour
 {
     public TileGenerationSettings settings;
@@ -11,6 +12,8 @@ public class CubeTile : MonoBehaviour
     public GameObject tile;
 
     public Vector2Int gridCoordinates;
+
+    public Vector3Int worldCoordinates;
 
     public List<CubeTile> neighbors;
 

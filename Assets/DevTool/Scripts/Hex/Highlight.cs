@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class HexHighlight : MonoBehaviour
+public class Highlight : MonoBehaviour
 {
     public void OnHighlightTile()
     {

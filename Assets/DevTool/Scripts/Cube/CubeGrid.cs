@@ -48,7 +48,10 @@ public class CubeGrid : MonoBehaviour
                 cubetile.RollTileType();
                 cubetile.AddTile();
 
+                if (cubetile.tileType == TileGenerationSettings.TileType.Standard)
+                    tile.layer = 7;
                 tile.GetComponent<CubeTile>().gridCoordinates = new Vector2Int(x, y);
+                tile.GetComponent<CubeTile>().worldCoordinates = new Vector3Int(x, 0, y);
                 tile.transform.SetParent(transform);
             }
         }

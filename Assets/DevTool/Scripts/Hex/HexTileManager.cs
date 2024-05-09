@@ -79,12 +79,12 @@ public class HexTileManager : MonoBehaviour
         return neighbors;
     }
 
-    public void OnHighlightTile(HexHighlight tile)
+    public void OnHighlightTile(Highlight tile)
     {
         highlight.transform.position = tile.transform.position;
     }
 
-    public void OnSelectTile(HexHighlight tile)
+    public void OnSelectTile(Highlight tile)
     {
         selector.transform.position = tile.transform.position;
     }

@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "TileGen/GenerationSettings")]
+[CreateAssetMenu(menuName = "TileGen/TileGenerationSettings")]
 public class TileGenerationSettings : ScriptableObject
 {
     public enum TileType

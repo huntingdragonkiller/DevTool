@@ -49,6 +49,7 @@ public class CubeMapLoader : MonoBehaviour
                 {
                     CubeTile tile = child.gameObject.GetComponent<CubeTile>();
                     tile.gridCoordinates += new Vector2Int(chunkCornerCoordinate.x, chunkCornerCoordinate.y);
+                    tile.worldCoordinates += new Vector3Int(chunkCornerCoordinate.x, 0, chunkCornerCoordinate.y);
 
                     tile.gameObject.name = $"Cube (C{tile.gridCoordinates.x}, R{tile.gridCoordinates.y})";
                 }

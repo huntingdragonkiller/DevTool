@@ -5,20 +5,21 @@ using UnityEngine;
 public class CubeTileManager : MonoBehaviour
 {
     public static CubeTileManager instance;
-    public Dictionary<Vector2, CubeTile> tiles;
+    public Dictionary<Vector3Int, CubeTile> tiles;
+    Dictionary<Vector3Int, List<Vector3Int>> tileNeighborDict = new Dictionary<Vector3Int, List<Vector3Int>>();
 
     public GameObject highlight;
     public GameObject selector;
-    public Vector2 playerPos;
+    public Vector3Int playerPos;
 
     public GameObject player;
     //public List<HexTile> path;
 
     
-    private void Awake()
+    private void Start()
     {
         instance = this;
-        tiles = new Dictionary<Vector2, CubeTile>();
+        tiles = new Dictionary<Vector3Int, CubeTile>();
 
         CubeTile[] cubeTiles = gameObject.GetComponentsInChildren<CubeTile>();
         // Register all the tiles
@@ -37,6 +38,7 @@ public class CubeTileManager : MonoBehaviour
         // Put the player somewhere
         int randomTile = Random.Range(0, cubeTiles.Length);
         CubeTile tile = cubeTiles[randomTile];
+        /*
         while (tile.tileType != TileGenerationSettings.TileType.Standard)
         {
             tile = cubeTiles[randomTile];
@@ -51,25 +53,25 @@ public class CubeTileManager : MonoBehaviour
 
     public void RegisterTile(CubeTile tile)
     {
-        tiles.Add(tile.gridCoordinates, tile);
+        tiles.Add(tile.worldCoordinates, tile);
     }
 
     // Get the neighbors of each tile
-    private List<CubeTile> GetNeighbours(CubeTile tile)
+    public List<CubeTile> GetNeighbours(CubeTile tile)
     {
         List<CubeTile> neighbors = new List<CubeTile>();
 
-        Vector2[] neighborCoords = new Vector2[]
+        Vector3Int[] neighborCoords = new Vector3Int[]
         {
-            new Vector2(1, 0),
-            new Vector2(0, 1),
-            new Vector2(-1, 0),
-            new Vector2(0, -1),
+            new Vector3Int(1, 0, 0),
+            new Vector3Int(0, 0, 1),
+            new Vector3Int(-1, 0, 0),
+            new Vector3Int(0, 0, -1),
         };
 
-        foreach (Vector2 neighborCoord in neighborCoords)
+        foreach (Vector3Int neighborCoord in neighborCoords)
         {
-            Vector2 tileCoord = tile.gridCoordinates;
+            Vector3Int tileCoord = tile.worldCoordinates;
 
             if (tiles.TryGetValue(tileCoord + neighborCoord, out CubeTile neighbor))
             {
@@ -78,13 +80,39 @@ public class CubeTileManager : MonoBehaviour
         }
         return neighbors;
     }
+    
+    public List<Vector3Int> GetNeighboursFor(Vector3Int coordinates)
+    {
+        
+        if(tiles.ContainsKey(coordinates) == false)
+        {
+            Debug.Log("No neighbors");
+            return new List<Vector3Int>();
+        }
 
-    public void OnHighlightTile(HexHighlight tile)
+        if (tiles.ContainsKey(coordinates))
+        {
+            Debug.Log("Yes neighbors");
+            return tileNeighborDict[coordinates];
+        }
+
+        
+        tileNeighborDict.Add(coordinates, new List<Vector3Int>());
+
+        if (tiles.ContainsKey(coordinates))
+        {
+            tileNeighborDict[coordinates].Add(coordinates);
+        }
+        
+        return tileNeighborDict[coordinates];
+    }
+    
+    public void OnHighlightTile(Highlight tile)
     {
         highlight.transform.position = tile.transform.position;
     }
 
-    public void OnSelectTile(HexHighlight tile)
+    public void OnSelectTile(Highlight tile)
     {
         selector.transform.position = tile.transform.position;
     }
