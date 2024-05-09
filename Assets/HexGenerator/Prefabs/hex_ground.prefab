@@ -140,4 +140,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 064afbbb8b384e548ad68c0337bd5484, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  glowMaterial: {fileID: 2100000, guid: c4afcdc5afbdb1140af5a87ea191ee82, type: 2}
+  glowMaterial: {fileID: 2100000, guid: 8ebd5877604ac514f86efc95e9e7127a, type: 2}

@@ -26,7 +26,7 @@ public class TileCoordinates : MonoBehaviour
         return new Vector3Int(x, y, z);
     }
 
-    public static Vector3 GetPositionForHexFromCoordinate(int column, int row, float radius, bool isFlatTopped = false)
+    public static Vector3 GetPositionForHexFromCoordinate(int column, int row, float radius = 1.16f, bool isFlatTopped = false)
     {
         float width, height, xPosition, yPosition, horDis, verDis, offset;
         bool shouldOffset;

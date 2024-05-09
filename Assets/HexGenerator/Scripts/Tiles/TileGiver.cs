@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [ExecuteInEditMode]
+[SelectionBase]
 public class TileGiver : MonoBehaviour
 {
     public TileGenerationSettings.TileType tileType;

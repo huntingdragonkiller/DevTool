@@ -37,7 +37,7 @@ public class TileMapGen : MonoBehaviour
                 int randomChunk = Random.Range(0, chunks.Count);
                 GameObject chunk = Instantiate(chunks[randomChunk]);
                 chunk.name = $"Chunk (C{x}, R{y})";
-                chunk.transform.position = TileCoordinates.GetPositionForHexFromCoordinate(x, y, chunkSize);
+                chunk.transform.position = TileCoordinates.GetPositionForHexFromCoordinate(x*chunkSize, y*chunkSize);
                 chunk.transform.SetParent(transform, true);
             }
         }
